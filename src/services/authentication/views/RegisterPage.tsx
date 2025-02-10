@@ -1,5 +1,6 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 import { RegisterForm } from '@/services/authentication/components/RegisterForm';
+import Image from 'next/image';
 
 export default function RegisterPage() {
   return (
@@ -20,7 +21,9 @@ export default function RegisterPage() {
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
+        <Image
+          width={1920}
+          height={1080}
           src="/auth/Login_Image.avif"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"

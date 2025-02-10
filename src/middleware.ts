@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
   if (isPublicRoute) {
     // If user is authenticated, redirect to dashboard
     if (token) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      return NextResponse.redirect(new URL('/home', request.url));
     }
     // Allow access to public route for non-authenticated users
     return NextResponse.next();

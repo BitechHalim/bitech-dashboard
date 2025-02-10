@@ -6,10 +6,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 interface FieldProps {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   field: FieldApi<any, any, any, any>;
 }
 
 interface FormFieldProps {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   field: FieldApi<any, any, any, any>;
   label: string;
   type: 'email' | 'password' | 'text';

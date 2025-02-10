@@ -13,11 +13,12 @@
     "unicorn/no-array-callback-reference": "off",
     "unicorn/no-array-for-each": "off",
     "unicorn/no-array-reduce": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "unicorn/prevent-abbreviations": [
       "error",
       {
         "allowList": {
-          "e2e": true,
+          "e2e": true
         },
         "replacements": {
           "props": false,
