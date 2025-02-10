@@ -32,6 +32,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^2.5.1
         version: 2.5.1(react-redux@9.2.0(@types/react@19.0.8)(react@19.0.0)(redux@5.0.1))(react@19.0.0)
+      '@tanstack/form-core':
+        specifier: ^0.41.3
+        version: 0.41.3
       '@tanstack/react-form':
         specifier: ^0.41.3
         version: 0.41.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)
