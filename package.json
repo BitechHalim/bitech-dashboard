@@ -11,7 +11,8 @@
     "type-check": "tsc -b",
     "format": "prettier --write .",
     "lint:fix": "next lint --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepush-checks": "pnpm lint && pnpm type-check && pnpm test"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
