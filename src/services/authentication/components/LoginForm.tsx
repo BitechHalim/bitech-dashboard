@@ -4,19 +4,18 @@ import { cn } from '@/lib/utils';
 import { useForm } from '@tanstack/react-form';
 import { loginSchema } from '@/services/authentication/schemas/login.schema';
 import {
-  EmailField,
   LoginHeader,
-  PasswordField,
   SignUpPrompt,
-  SubmitButton,
 } from '@/services/authentication/components/parts';
 import { useRouter } from 'next/navigation';
+import {
+  EmailField,
+  PasswordField,
+  SubmitButton,
+} from '@/components/forms/FormElements/Fields';
+import { FormProps } from '@/components/forms/FormElements/types';
 
-interface LoginFormProps extends React.ComponentPropsWithoutRef<'form'> {
-  className?: string;
-}
-
-export function LoginForm({ className, ...props }: LoginFormProps) {
+export function LoginForm({ className, ...props }: FormProps) {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
@@ -26,9 +25,9 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
     validators: {
       onChangeAsyncDebounceMs: 1000,
       onChangeAsync: loginSchema,
+      onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      // Navigate to home page
       console.log(value);
       router.push('/home');
     },

@@ -6,7 +6,6 @@ import {
 import { AppSidebar } from '@/components/layouts/AppSidebar';
 import { Separator } from '@/components/ui/separator';
 import { ModeToggle } from '@/components/ThemeToggle';
-import { Breadcrumbs } from '@/components/layouts/Breadcrumbs';
 import AppNavigationBar from '@/components/layouts/AppNavigationBar';
 
 export default function RootLayout({
@@ -22,7 +21,7 @@ export default function RootLayout({
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumbs />
+            {/*<Breadcrumbs />*/}
 
             <div className={`flex flex-1 items-center justify-end`}>
               <AppNavigationBar />

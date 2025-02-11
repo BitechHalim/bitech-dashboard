@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { MoreVertical } from "lucide-react";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { MoreVertical } from 'lucide-react';
 
 interface DropDownCTAsProps {
   options: { label: string; onClick: () => void }[];
@@ -22,7 +22,7 @@ const DropDownCTAs = ({ options, triggerJSX }: DropDownCTAsProps) => {
             triggerJSX
           ) : (
             <Button variant="ghost" className="h-4 w-4 p-0">
-              <MoreVertical className="h-4 w-4 " />
+              <MoreVertical className="h-4 w-4" />
             </Button>
           )}
         </DropdownMenuTrigger>

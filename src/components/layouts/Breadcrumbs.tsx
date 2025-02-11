@@ -1,20 +1,20 @@
-"use client";
-import { usePathname } from "next/navigation";
+'use client';
+import { usePathname } from 'next/navigation';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 
 export function Breadcrumbs() {
   const pathname = usePathname();
-  const pathSegments = pathname.split("/").filter(Boolean);
+  const pathSegments = pathname.split('/').filter(Boolean);
 
   const generateBreadcrumbs = () => {
-    return pathSegments.slice(1).map((segment, index) => {
-      const href = "/" + pathSegments.slice(1, index + 2).join("/");
+    return pathSegments.map((segment, index) => {
+      const href = '/' + pathSegments.slice(1, index + 2).join('/');
       return (
         <BreadcrumbItem key={href}>
           <BreadcrumbLink href={href}>{segment}</BreadcrumbLink>

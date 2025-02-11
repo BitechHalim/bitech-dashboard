@@ -2,14 +2,6 @@
 
 import React, { useEffect } from 'react';
 import {
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -18,29 +10,30 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import {
+  Calculator,
+  Calendar,
+  CreditCard,
+  Search,
+  Settings,
+  Smile,
+  User,
+} from 'lucide-react';
 import Link from 'next/link';
+import { menuItems } from '@/components/layouts/data/menuItems';
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from '@/components/ui/command';
 
 const AppNavigationBar = () => {
   const [open, setOpen] = React.useState(false);
-
-  // Example data - replace with your actual data
-  const searchItems = [
-    {
-      group: 'Companies',
-      items: [
-        { id: 1, name: 'Acme Corp', href: '/companies/1' },
-        { id: 2, name: 'TechStart Inc', href: '/companies/2' },
-      ],
-    },
-    {
-      group: 'Clients',
-      items: [
-        { id: 1, name: 'John Doe', href: '/clients/1' },
-        { id: 2, name: 'Jane Smith', href: '/clients/2' },
-      ],
-    },
-  ];
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -59,72 +52,29 @@ const AppNavigationBar = () => {
       <div className="flex h-16 items-center gap-4 px-4">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
-                      >
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          Overview
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          View your dashboard overview and key metrics
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Companies</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/companies"
-                      >
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          All Companies
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          View and manage all companies
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Clients</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/clients"
-                      >
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          All Clients
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          View and manage all clients
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+            {menuItems.map(item => (
+              <NavigationMenuItem key={item.url}>
+                <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4">
+                    {item.items?.map(subItem => (
+                      <li key={subItem.url} className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                            href={subItem.url}
+                          >
+                            <div className="mb-2 mt-4 text-lg font-medium">
+                              {subItem.title}
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            ))}
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -136,34 +86,46 @@ const AppNavigationBar = () => {
           >
             <Search className="h-4 w-4 xl:mr-2" />
             <span className="hidden xl:inline-flex">Search...</span>
-            <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
-              <span className="text-xs">⌘</span>K
-            </kbd>
           </Button>
-        </div>
-
-        <CommandDialog open={open} onOpenChange={setOpen}>
-          <CommandInput placeholder="Type to search..." />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            {searchItems.map(group => (
-              <CommandGroup key={group.group} heading={group.group}>
-                {group.items.map(item => (
-                  <CommandItem
-                    key={item.id}
-                    onSelect={() => {
-                      setOpen(false);
-                      // Add navigation logic here
-                      console.log(`Navigate to: ${item.href}`);
-                    }}
-                  >
-                    {item.name}
-                  </CommandItem>
-                ))}
+          <CommandDialog open={open} onOpenChange={setOpen}>
+            <CommandInput placeholder="Type a command or search..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup heading="Suggestions">
+                <CommandItem>
+                  <Calendar />
+                  <span>Calendar</span>
+                </CommandItem>
+                <CommandItem>
+                  <Smile />
+                  <span>Search Emoji</span>
+                </CommandItem>
+                <CommandItem>
+                  <Calculator />
+                  <span>Calculator</span>
+                </CommandItem>
               </CommandGroup>
-            ))}
-          </CommandList>
-        </CommandDialog>
+              <CommandSeparator />
+              <CommandGroup heading="Settings">
+                <CommandItem>
+                  <User />
+                  <span>Profile</span>
+                  <CommandShortcut>⌘P</CommandShortcut>
+                </CommandItem>
+                <CommandItem>
+                  <CreditCard />
+                  <span>Billing</span>
+                  <CommandShortcut>⌘B</CommandShortcut>
+                </CommandItem>
+                <CommandItem>
+                  <Settings />
+                  <span>Settings</span>
+                  <CommandShortcut>⌘S</CommandShortcut>
+                </CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </CommandDialog>
+        </div>
       </div>
     </div>
   );

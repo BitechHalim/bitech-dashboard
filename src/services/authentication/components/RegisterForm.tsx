@@ -3,21 +3,20 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { useForm } from '@tanstack/react-form';
 import {
-  ConfirmPasswordField,
-  EmailField,
   LoginHeader,
-  PasswordField,
   SignInPrompt,
-  SubmitButton,
-  UserField,
 } from '@/services/authentication/components/parts';
 import { registerSchema } from '@/services/authentication/schemas/register.schema';
+import {
+  ConfirmPasswordField,
+  EmailField,
+  PasswordField,
+  SubmitButton,
+  TextField,
+} from '@/components/forms/FormElements/Fields';
+import { FormProps } from '@/components/forms/FormElements/types';
 
-interface RegisterFormProps extends React.ComponentPropsWithoutRef<'form'> {
-  className?: string;
-}
-
-export function RegisterForm({ className, ...props }: RegisterFormProps) {
+export function RegisterForm({ className, ...props }: FormProps) {
   const form = useForm({
     defaultValues: {
       username: '',
@@ -28,6 +27,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
     validators: {
       onChangeAsyncDebounceMs: 1000,
       onChangeAsync: registerSchema,
+      onSubmit: registerSchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -50,7 +50,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
 
       <div className="grid gap-6">
         <form.Field name="username">
-          {field => <UserField field={field} />}
+          {field => <TextField label={'Username'} field={field} />}
         </form.Field>
 
         <form.Field name="email">
