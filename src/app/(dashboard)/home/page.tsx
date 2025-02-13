@@ -1,5 +1,5 @@
 import React from 'react';
-import { MetricCard } from '@/components/cards/KPIs/ProfitCard';
+import { ProfitCard } from '@/components/cards/KPIs/ProfitCard';
 import { KPI2Card } from '@/components/cards/KPIs/KPI2Card';
 import List from '@/components/lists/List';
 import BasicListItem from '@/components/lists/BasicListItem';
@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig } from '@/components/ui/chart';
 
 // Types
-interface MetricCardData {
+interface ProfitCardData {
   title: string;
   subtitle: string;
   value: string;
@@ -15,7 +15,7 @@ interface MetricCardData {
 }
 
 // Data
-const metrics: MetricCardData[] = [
+const metrics: ProfitCardData[] = [
   {
     title: 'Total Companies',
     subtitle: 'Last Week',
@@ -100,7 +100,7 @@ const Page = () => {
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="grid grid-cols-4 gap-4">
         {metrics.map((metric, index) => (
-          <MetricCard
+          <ProfitCard
             key={index}
             title={metric.title}
             subtitle={metric.subtitle}

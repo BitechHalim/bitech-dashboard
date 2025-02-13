@@ -16,22 +16,11 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import MultiSelectDropdown from '@/components/MultiSelectDropdown';
-import { initialServices, availableCompanies } from '@/constants';
-
-interface Company {
-  name: string;
-  status: 'active' | 'pending';
-  clients: number;
-  apiCalls: number;
-}
-
-interface Service {
-  id: number;
-  name: string;
-  description: string;
-  companies: Company[];
-}
+import {
+  initialServices,
+  availableCompanies,
+} from '@/services/services-management/fake-db';
+import MultiSelectDropdown from '@/components/forms/MultiSelect/MultiSelect';
 
 interface AssignServicePayload {
   serviceId: string;
@@ -96,7 +85,7 @@ const AssignServiceDialog: React.FC<AssignServiceDialogProps> = ({
                 <SelectValue placeholder="Select a service" />
               </SelectTrigger>
               <SelectContent>
-                {initialServices.map((service: Service) => (
+                {initialServices.map(service => (
                   <SelectItem key={service.id} value={service.id.toString()}>
                     {service.name}
                   </SelectItem>

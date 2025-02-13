@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowDown, ArrowUp, CreditCard, DollarSign } from 'lucide-react';
 
-interface MetricCardProps {
+interface ProfitCardProps {
   title: string;
   subtitle: string;
   value: string;
@@ -9,13 +9,13 @@ interface MetricCardProps {
   type: 'increase' | 'decrease';
 }
 
-export function MetricCard({
+export function ProfitCard({
   title,
   subtitle,
   value,
   change,
   type,
-}: MetricCardProps) {
+}: ProfitCardProps) {
   const Icon = type === 'increase' ? CreditCard : DollarSign;
 
   return (
