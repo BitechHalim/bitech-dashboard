@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import companyReducer from '@/services/company-service/store/companySlice';
+import clientReducer from '@/services/client-management/store/clientSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       company: companyReducer,
+      client: clientReducer,
     },
   });
 };

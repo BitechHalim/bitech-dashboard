@@ -1,29 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/store/store';
 
-interface CompanyState {
-  companyId: string | number | null;
+interface ClientState {
+  clientId: string | number | null;
 }
 
-const initialState: CompanyState = {
-  companyId: null,
+const initialState: ClientState = {
+  clientId: null,
 };
 
-const companySlice = createSlice({
-  name: 'company',
+const clientSlice = createSlice({
+  name: 'client',
   initialState,
   reducers: {
-    setCompanyId: (state, action: PayloadAction<string | number | null>) => {
-      state.companyId = action.payload;
+    setClientId: (state, action: PayloadAction<string | number | null>) => {
+      state.clientId = action.payload;
     },
-    clearCompanyId: state => {
-      state.companyId = null;
+    clearClientId: state => {
+      state.clientId = null;
     },
   },
 });
 
-export const { setCompanyId, clearCompanyId } = companySlice.actions;
+export const { setClientId, clearClientId } = clientSlice.actions;
 
-export const selectCompanyId = (state: RootState) => state.company.companyId;
+export const selectClientId = (state: RootState) => state.client.clientId;
 
-export default companySlice.reducer;
+export default clientSlice.reducer;

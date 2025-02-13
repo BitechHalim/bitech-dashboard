@@ -1,8 +1,8 @@
 import React from 'react';
-import CompanyDetails from '@/services/company-service/views/CompanyDetails';
+import ClientDetails from '@/services/client-management/views/ClientDetails';
 
 const Page = () => {
-  return <CompanyDetails />;
+  return <ClientDetails />;
 };
 
 export default Page;
