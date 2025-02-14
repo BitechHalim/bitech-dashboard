@@ -1,7 +1,8 @@
 import React from 'react';
+import AnalyticsPage from '@/services/analytics-reports/views/AnalyticsPage';
 
 const Page = () => {
-  return <div>Hello World</div>;
+  return <AnalyticsPage />;
 };
 
 export default Page;
