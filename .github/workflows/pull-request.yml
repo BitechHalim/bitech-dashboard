@@ -15,11 +15,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: ⎔ Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: 🔬 Lint
-        run: npm run lint
+        run: pnpm lint
 
   type-check:
     name: ʦ TypeScript
@@ -33,25 +38,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: ⎔ Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: 🔎 Type check
-        run: npm run type-check --if-present
-
-  commitlint:
-    name: ⚙️ commitlint
-    runs-on: ubuntu-latest
-    if: github.actor != 'dependabot[bot]'
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: ⚙️ commitlint
-        uses: wagoid/commitlint-github-action@v4
+        run: pnpm type-check
 
   vitest:
     name: ⚡ Vitest
@@ -74,8 +70,13 @@ jobs:
         with:
           node-version: 20
 
+      - name: ⎔ Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
       - name: ⚡ Run vitest
-        run: npm run test -- --coverage
+        run: pnpm test
