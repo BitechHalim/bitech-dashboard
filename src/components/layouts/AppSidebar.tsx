@@ -1,67 +1,61 @@
 'use client';
-import { Home } from 'lucide-react';
-
+import * as React from 'react';
+import { Command } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
 } from '@/components/ui/sidebar';
 import { usePathname } from 'next/navigation';
+import { NavMain } from '@/components/layouts/NavMain';
+import { NavUser } from '@/components/layouts/NavUser';
+import { menuItems } from '@/components/layouts/data/menuItems';
 
-// Menu items.
-export const items = [
-  {
-    title: 'Company Management',
-    url: '/company-management',
-    icon: Home,
+const data = {
+  user: {
+    name: 'User',
+    email: 'user@example.com',
+    avatar: '/avatars/user.jpg',
   },
-  {
-    title: 'Service Management',
-    url: '/service-management',
-    icon: Home,
-  },
-  {
-    title: 'Client Management',
-    url: '/client-management',
-    icon: Home,
-  },
-  {
-    title: 'Analytics and Reporting',
-    url: '/analytics-reporting',
-    icon: Home,
-  },
-];
+};
 
-export function AppSidebar() {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
-  console.log(pathname);
+
+  // Update active states based on current path
+  const navMainWithActive = menuItems.map(item => ({
+    ...item,
+    isActive:
+      pathname === item.url ||
+      (item.items?.some(subItem => subItem.url === pathname) ?? false),
+  }));
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <div className="flex items-center gap-2 px-4 py-2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <Command className="h-6 w-6" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg font-semibold">Bitech Company</span>
+            <span className="text-xs text-muted-foreground">
+              Management Portal
+            </span>
+          </div>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map(item => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <NavMain items={navMainWithActive} />
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }
+
+export default AppSidebar;

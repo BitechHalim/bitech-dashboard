@@ -1,7 +1,8 @@
 import React from 'react';
+import CompanyScreen from '@/services/company-service/views/CompanyScreen';
 
 const Page = () => {
-  return <div>Hello World</div>;
+  return <CompanyScreen />;
 };
 
 export default Page;

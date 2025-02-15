@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import todoReducer from './todoSlice';
+import companyReducer from '@/services/company-service/store/companySlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      todos: todoReducer,
+      company: companyReducer,
     },
   });
 };
