@@ -8,7 +8,7 @@ export interface RadioOption {
   label: string;
   description?: string;
   icon?: React.ReactNode;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, never>;
 }
 
 export interface RadioCardGroupProps {
@@ -31,7 +31,7 @@ const RadioCardGroup = ({
   className = '',
   cardClassName = '',
   icon: DefaultIcon,
-}: RadioCardGroupProps): JSX.Element => {
+}: RadioCardGroupProps): React.ReactNode => {
   return (
     <div>
       <RadioGroup.Root

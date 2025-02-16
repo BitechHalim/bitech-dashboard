@@ -1,26 +1,7 @@
 'use client';
-
-import React, { useEffect } from 'react';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
+import React, { useEffect, useMemo } from 'react';
+import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Search,
-  Settings,
-  Smile,
-  User,
-} from 'lucide-react';
-import Link from 'next/link';
-import { menuItems } from '@/components/layouts/data/menuItems';
 import {
   CommandDialog,
   CommandEmpty,
@@ -28,12 +9,52 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from '@/components/ui/command';
+import { cn } from '@/lib/utils';
+import { menuItems } from '@/components/layouts/data/menuItems';
+import { useRouter } from 'next/navigation';
 
-const AppNavigationBar = () => {
+interface CommandSearchProps {
+  className?: string;
+  buttonClassName?: string;
+}
+
+interface FlatMenuItem {
+  title: string;
+  url: string;
+  parentTitle?: string;
+  icon?: React.ComponentType;
+}
+
+const CommandSearch = ({ className, buttonClassName }: CommandSearchProps) => {
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+
+  // Flatten menu items for searching
+  const flattenedItems = useMemo(() => {
+    const items: FlatMenuItem[] = [];
+
+    menuItems.forEach(item => {
+      // Add main menu item
+      items.push({
+        title: item.title,
+        url: item.url,
+        icon: item.icon,
+      });
+
+      // Add sub-items with parent reference
+      item.items?.forEach(subItem => {
+        items.push({
+          title: subItem.title,
+          url: subItem.url,
+          parentTitle: item.title,
+          icon: item.icon,
+        });
+      });
+    });
+
+    return items;
+  }, []);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -47,88 +68,63 @@ const AppNavigationBar = () => {
     return () => document.removeEventListener('keydown', down);
   }, []);
 
-  return (
-    <div className="border-b">
-      <div className="flex h-16 items-center gap-4 px-4">
-        <NavigationMenu>
-          <NavigationMenuList>
-            {menuItems.map(item => (
-              <NavigationMenuItem key={item.url}>
-                <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4">
-                    {item.items?.map(subItem => (
-                      <li key={subItem.url} className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href={subItem.url}
-                          >
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              {subItem.title}
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+  const onSelect = (url: string) => {
+    setOpen(false);
+    router.push(url);
+  };
 
-        <div className="ml-auto flex items-center space-x-4">
-          <Button
-            variant="outline"
-            className="relative h-9 w-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
-            onClick={() => setOpen(true)}
-          >
-            <Search className="h-4 w-4 xl:mr-2" />
-            <span className="hidden xl:inline-flex">Search...</span>
-          </Button>
-          <CommandDialog open={open} onOpenChange={setOpen}>
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Suggestions">
-                <CommandItem>
-                  <Calendar />
-                  <span>Calendar</span>
-                </CommandItem>
-                <CommandItem>
-                  <Smile />
-                  <span>Search Emoji</span>
-                </CommandItem>
-                <CommandItem>
-                  <Calculator />
-                  <span>Calculator</span>
-                </CommandItem>
-              </CommandGroup>
-              <CommandSeparator />
-              <CommandGroup heading="Settings">
-                <CommandItem>
-                  <User />
-                  <span>Profile</span>
-                  <CommandShortcut>⌘P</CommandShortcut>
-                </CommandItem>
-                <CommandItem>
-                  <CreditCard />
-                  <span>Billing</span>
-                  <CommandShortcut>⌘B</CommandShortcut>
-                </CommandItem>
-                <CommandItem>
-                  <Settings />
-                  <span>Settings</span>
-                  <CommandShortcut>⌘S</CommandShortcut>
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </CommandDialog>
-        </div>
-      </div>
+  return (
+    <div className={className}>
+      <Button
+        variant="outline"
+        className={cn(
+          'relative h-9 w-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2',
+          buttonClassName,
+        )}
+        onClick={() => setOpen(true)}
+      >
+        <Search className="h-4 w-4 xl:mr-2" />
+        <span className="hidden xl:inline-flex">Search...</span>
+        <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
+          <span className="text-xs">⌘</span>K
+        </kbd>
+      </Button>
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder="Search all pages and commands..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          {menuItems.map(section => (
+            <CommandGroup key={section.title} heading={section.title}>
+              {flattenedItems
+                .filter(
+                  item =>
+                    item.parentTitle === section.title ||
+                    item.title === section.title,
+                )
+                .map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <CommandItem
+                      key={Math.random().toString(32)}
+                      value={`${item.title} ${item.parentTitle || ''}`}
+                      onSelect={() => onSelect(item.url)}
+                    >
+                      {Icon && <Icon />}
+                      <span>{item.title}</span>
+                      {item.parentTitle && (
+                        <span className="ml-2 text-xs text-muted-foreground">
+                          in {item.parentTitle}
+                        </span>
+                      )}
+                    </CommandItem>
+                  );
+                })}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </CommandDialog>
     </div>
   );
 };
 
-export default AppNavigationBar;
+export default CommandSearch;
