@@ -1,5 +1,6 @@
 import React from 'react';
 import ClientTable from '@/services/client-management/components/ClientTable';
+import CompanySelector from '@/services/client-management/components/CompanySelector';
 
 const ClientList = () => {
   return (
@@ -10,6 +11,7 @@ const ClientList = () => {
           Manage your clients efficiently and effectively
         </p>
       </div>
+      <CompanySelector />
       <ClientTable />
     </div>
   );
