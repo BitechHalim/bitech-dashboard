@@ -9,6 +9,11 @@ interface ProfitCardProps {
   type: 'increase' | 'decrease';
 }
 
+const ICONS = {
+  increase: CreditCard,
+  decrease: DollarSign,
+};
+
 export function ProfitCard({
   title,
   subtitle,
@@ -16,7 +21,9 @@ export function ProfitCard({
   change,
   type,
 }: ProfitCardProps) {
-  const Icon = type === 'increase' ? CreditCard : DollarSign;
+  const Icon = ICONS[type];
+  const isPositiveChange = change >= 0;
+  const changeColor = isPositiveChange ? 'text-green-500' : 'text-red-500';
 
   return (
     <Card>
@@ -26,24 +33,17 @@ export function ProfitCard({
             <Icon
               className={`h-5 w-5 ${type === 'increase' ? 'text-red-500' : 'text-green-500'}`}
             />
-            <div className="font-medium">{title}</div>
+            <span className="font-medium">{title}</span>
           </div>
-
-          <div className="text-sm text-slate-400">{subtitle}</div>
-
-          <div className="mt-1 text-2xl font-semibold">{value}</div>
-
-          <div
-            className={`flex items-center text-sm ${
-              change >= 0 ? 'text-green-500' : 'text-red-500'
-            }`}
-          >
-            {change >= 0 ? (
+          <p className="text-sm text-slate-400">{subtitle}</p>
+          <p className="mt-1 text-2xl font-semibold">{value}</p>
+          <div className={`flex items-center text-sm ${changeColor}`}>
+            {isPositiveChange ? (
               <ArrowUp className="h-4 w-4" />
             ) : (
               <ArrowDown className="h-4 w-4" />
             )}
-            {Math.abs(change)}% From Last month
+            <span>{Math.abs(change)}% From Last month</span>
           </div>
         </div>
       </CardContent>

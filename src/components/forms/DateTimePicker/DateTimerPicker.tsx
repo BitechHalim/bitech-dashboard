@@ -21,9 +21,12 @@ interface DateTimePickerProps {
 
 export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const date = value
-    ? parse(value, 'yyyy-MM-dd HH:mm:ss', new Date())
-    : undefined;
+
+  const parsedDate = (value: string) => {
+    return parse(value, 'yyyy-MM-dd HH:mm:ss', new Date());
+  };
+
+  const date = value ? parsedDate(value) : undefined;
 
   const handleDateSelect = (selectedDate: Date | undefined) => {
     if (selectedDate) {
