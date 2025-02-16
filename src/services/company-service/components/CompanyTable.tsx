@@ -111,24 +111,25 @@ const CompanyTable: React.FC = () => {
         searchPlaceholder="Search companies..."
         renderBulkActions={({ table }) => {
           const selectedRows = table.getSelectedRowModel().rows;
+          const isRowsSelected = selectedRows.length > 0;
+          const deleteSelectedRows = () => {
+            const selectedIds = selectedRows.map(row => row.original.id);
+            // Delete Rows with selectedIds
+            console.log(selectedIds);
+            table.resetRowSelection();
+          };
 
-          return selectedRows.length > 0 ? (
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  const selectedIds = selectedRows.map(row => row.original.id);
-                  // Delete Rows with selectedIds
-                  console.log(selectedIds);
-                  table.resetRowSelection();
-                }}
-              >
-                <Trash className="mr-2 h-4 w-4" />
-                Delete {selectedRows.length} Compan
-                {selectedRows.length > 1 ? 'ies' : 'y'}
-              </Button>
-            </div>
-          ) : null;
+          return (
+            isRowsSelected && (
+              <div className="flex items-center space-x-2">
+                <Button variant="destructive" onClick={deleteSelectedRows}>
+                  <Trash className="mr-2 h-4 w-4" />
+                  Delete {selectedRows.length} Compan
+                  {selectedRows.length > 1 ? 'ies' : 'y'}
+                </Button>
+              </div>
+            )
+          );
         }}
         actions={{
           handleDelete: id => handleCompanyDelete(id),

@@ -123,13 +123,25 @@ export function ClientForm({ className, ...props }: FormProps) {
                     id={option.value}
                     label={option.label}
                     checked={field.state.value?.includes(option.value) ?? false}
-                    onCheckedChange={checked => {
-                      const newPermissions = checked
-                        ? [...(field.state.value ?? []), option.value]
-                        : (field.state.value ?? []).filter(
-                            p => p !== option.value,
-                          );
-                      field.handleChange(newPermissions);
+                    onCheckedChange={(checked: boolean) => {
+                      const updatePermissions = (
+                        currentPermissions: string[] | undefined,
+                        permission: string,
+                        isChecked: boolean,
+                      ): string[] => {
+                        if (isChecked) {
+                          return [...(currentPermissions ?? []), permission];
+                        }
+                        return (currentPermissions ?? []).filter(
+                          p => p !== permission,
+                        );
+                      };
+                      const updatedPermissions = updatePermissions(
+                        field.state.value,
+                        option.value,
+                        checked,
+                      );
+                      field.handleChange(updatedPermissions);
                     }}
                   />
                 ))}

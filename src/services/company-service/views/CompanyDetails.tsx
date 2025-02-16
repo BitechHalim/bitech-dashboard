@@ -1,5 +1,5 @@
 import React from 'react';
-import { CompanyForm } from '@/services/company-service/components/CompanyForm/CompanyForm';
+import { CompanyForm } from '@/services/company-service/components/CompanyForm';
 
 const CompanyDetails = () => {
   return <CompanyForm />;

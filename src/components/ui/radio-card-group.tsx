@@ -8,7 +8,7 @@ export interface RadioOption {
   label: string;
   description?: string;
   icon?: React.ReactNode;
-  metadata?: Record<string, never>;
+  metadata?: Record<string, any>;
 }
 
 export interface RadioCardGroupProps {
