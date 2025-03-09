@@ -35,9 +35,9 @@ export default function CompanyManagementError({ error, reset }: ErrorProps) {
         </h2>
 
         <p className="text-muted-foreground">
-          We couldn't load your company settings or organization data. This
+          We couldn&#39;t load your company settings or organization data. This
           could be due to a permissions issue or system maintenance. Any changes
-          you've made are still saved.
+          you&#39;ve made are still saved.
         </p>
 
         <div className="mt-6 flex flex-col gap-4 sm:flex-row">

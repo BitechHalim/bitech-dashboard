@@ -33,8 +33,8 @@ export default function HomeError({ error, reset }: ErrorProps) {
         </h2>
 
         <p className="text-muted-foreground">
-          We're having trouble loading your dashboard. This might be because of
-          a connectivity issue or because some services are currently
+          We&#39;re having trouble loading your dashboard. This might be because
+          of a connectivity issue or because some services are currently
           unavailable. Your data is safe.
         </p>
 
